@@ -1,0 +1,1560 @@
+
+ = RELAX-NG Schema Documentation =
+	    
+
+== Element: osgr ==
+	
+
+=== Content Model ===
+	
+      %attlist.osgr;, 
+      
+        %title;
+      ?
+      ,
+      
+        %names;
+      ?
+      ,
+      
+    (
+        %osgr.values;
+      )+
+    
+    
+
+
+=== Attributes ===
+    
+<table>
+<th>Attribute</th>
+<th>Type</th>
+<th>Use</th>
+<th>Documentation</th>
+	    
+<tr>
+<td>graphType</td>
+<td>
+	
+	    Enumeration: pie, norm
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	  The type of graph. One of  pie or
+	  norm. Draws either a PIE chart or a bar chart (when
+	  norm is selected. 
+	  @FIXME. What happens to the labels / values when 'pie' is
+	  selected? They aren't shown?
+	
+</td>
+</tr>
+
+<tr>
+<td>effect</td>
+<td>
+	
+	    Enumeration: 2D, 3D
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	  One from 2D or 3D. Draws either a
+	  plain area (2D) or a pseudo three dimensional bar or pie
+	  chart
+	
+</td>
+</tr>
+
+<tr>
+<td>colType</td>
+<td>
+	
+	    Enumeration: none, block, cylinder, cone, pyramid, line
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      When the graphType is set to norm, selects the
+      type of column to be generated. One from 
+      
+	none
+	block
+	cylinder
+	cone
+	pyramid
+	line
+      
+      The named shape is used to draw the vertical columns of
+      the bar chart. The default value is 'block', a two or three
+      dimentional square block
+    
+</td>
+</tr>
+
+<tr>
+<td>lineType</td>
+<td>
+	
+	    Enumeration: none, solid, dot, dash, longDash, dash-dot, longDash-dot, dash-dot-dot, longDash-dash, dash-dash-dot-dot
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      If present, specifies the type of line to be used to
+      connect the peak values of the bar chart. Select, one from
+      
+
+none
+solid
+dot
+dash
+longDash
+dash-dot
+longDash-dot
+dash-dot-dot
+longDash-dash
+dahs-dash-dot-dot
+
+
+    
+</td>
+</tr>
+
+<tr>
+<td>pointType</td>
+<td>
+	
+	    Enumeration: none, point, cross, plus, minus, star, square, circle, triangle, rhomb, pyramid, squareF, circleF, triangleF, rhombF, pyramidF
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      @FIXME. No visible effect? Leaves a gap in the top of
+      the bar chart line? Is this attribute applicable to a bar chart?
+      There is code to process it, though it seems not to
+      work.
+    
+</td>
+</tr>
+
+<tr>
+<td>smooth</td>
+<td>
+	
+	    Enumeration: yes, no
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      @FIXME. No visible effect on the bar chart? Is this
+      attribute applicable?
+    
+</td>
+</tr>
+
+<tr>
+<td>yAxisType</td>
+<td>
+	
+	    Enumeration: auto, withZero, shifted, log, dateTime
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      If the Y values do not start at zero, use this property
+      to obtain a clearer graph. Select one from 
+      
+	auto - Let the software decide
+	withZero - Include a zero value
+	shifted - start at non-zero value as appropriate
+	log - use a log scale
+      
+    
+</td>
+</tr>
+
+<tr>
+<td>yAxisLabelsFormat</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>yAxisMin</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yAxisMax</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yAxisStep</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yAxisMarkCount</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yAxisMarkDist</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yAxisDivision</td>
+<td>
+	
+	    Enumeration: none, 1, 2, 4, 5, 10
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      Specify the major Y axis divisions. Numeric values are
+      shown with this interval. Select from [none | 1 | 2 | 3 | 4 | 5
+      | 10]. The default value is 1
+    
+</td>
+</tr>
+
+<tr>
+<td>xAxisDivision</td>
+<td>
+	
+	    Enumeration: none, major, minor, both
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      Specifies which type of division are used on the X axis. Select from
+      
+	none - no 'tics' on the X axis
+	major - Show the major axis 'tics'
+	minor - Show only minor axis 'tics'
+	both -  Show both major and minor 'tics'
+      
+    
+</td>
+</tr>
+
+<tr>
+<td>xAxisPos</td>
+<td>
+	
+	    Enumeration: bottom, origin
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>xGrid</td>
+<td>
+	
+	    Enumeration: none, major, minor, both
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      Specifies which grid values are to be used on the X
+      axis. Select from [none | major | minor | both]. Causes
+      appropriately dimensioned grid lines along the X axis
+       
+    
+</td>
+</tr>
+
+<tr>
+<td>categoryGap</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>columnWd</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yGrid</td>
+<td>
+	
+	    Enumeration: none, major, minor
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+  Specifies which grid values are to be used on the Y
+  axis. Select from [none | major | minor ]. Causes appropriately
+  dimensioned grid lines along the Y axis vertically
+
+    
+</td>
+</tr>
+
+<tr>
+<td>colorScheme</td>
+<td>
+	
+	    Enumeration: color, warm, cold, grey, black
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      Defines an appropriate color scheme for the
+      graph. Select from [ color| warm | cold | grey | black].
+      grey is very useful when printing in black and
+      white. 
+    
+</td>
+</tr>
+
+<tr>
+<td>legend</td>
+<td>
+	
+	    Enumeration: none, left, right, top, bottom
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      Specifies the position, on the graph, at which a repeat
+      of the values range are repeated. Produces a block of text with
+      the 'color' scheme and the appropriate 'names' used against each
+      one. Select from [none|left|right|top|bottom]
+    
+</td>
+</tr>
+
+<tr>
+<td>legendMargin</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>legendPictureWd</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>legendPictureHg</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>legendLineHg</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>legendGap</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>legendFontSize</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>graphMargin</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>titleMargin</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>titleFontSize</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>labelAngle</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>labelFontSize</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>labelIn</td>
+<td>
+	
+	    Enumeration: none, value, percent, name
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      Adds values, names or percentages to the bars or
+      segments of the pie chart. Useful if accurate values are to be
+      shown. Select from [none|value|percentage|name]. Names are used
+      to label the segments of a pie chart.
+    
+</td>
+</tr>
+
+<tr>
+<td>labelOut</td>
+<td>
+	
+	    Enumeration: none, value, percent, name
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+      Enables the placing of labels 'outside' a pie chart,
+      opposite each segment. Specifies what kind of labels are
+      needed. Select from [none|value|percent|name]. 
+	
+</td>
+</tr>
+
+</table>
+    
+
+== Element: names ==
+	
+
+=== Content Model ===
+	
+      
+    (
+        %name;
+      )+
+    
+    
+
+
+=== Attributes ===
+    
+
+== Element: values ==
+	
+
+=== Content Model ===
+	
+      
+    (
+        %osgr.value;
+      )+
+    
+    
+
+
+=== Attributes ===
+    
+
+== Element: title ==
+	
+
+=== Content Model ===
+	
+      
+      
+    TEXT
+    
+    
+
+
+=== Attributes ===
+    
+<table>
+<th>Attribute</th>
+<th>Type</th>
+<th>Use</th>
+<th>Documentation</th>
+	    
+<tr>
+<td>color</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+</table>
+    
+
+== Element: name ==
+	
+
+=== Content Model ===
+	
+      
+    TEXT
+    
+    
+
+
+=== Attributes ===
+    
+
+== Element: value ==
+	
+
+=== Content Model ===
+	
+      
+      
+    TEXT
+    
+    
+
+
+=== Attributes ===
+    
+<table>
+<th>Attribute</th>
+<th>Type</th>
+<th>Use</th>
+<th>Documentation</th>
+	    
+<tr>
+<td>color</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>pointType</td>
+<td>
+	
+	    Enumeration: none, point, cross, plus, minus, star, square, circle, triangle, rhomb, pyramid, squareF, circleF, triangleF, rhombF, pyramidF
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+</table>
+    
+
+== Element: msgr ==
+	
+	Start (root) element
+      
+
+=== Content Model ===
+	
+      
+      %attlist.msgr;, 
+      
+        %title;
+      ?
+      ,
+      
+        %names;
+      ?
+      ,
+      
+    (
+        %msgr.values;
+      )+
+    
+    
+
+
+=== Attributes ===
+    
+<table>
+<th>Attribute</th>
+<th>Type</th>
+<th>Use</th>
+<th>Documentation</th>
+	    
+<tr>
+<td>stacked</td>
+<td>
+	
+	    Enumeration: none, sum, percentage
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>shift</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>effect</td>
+<td>
+	
+	    Enumeration: 2D, 3D
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>colType</td>
+<td>
+	
+	    Enumeration: none, block, cylinder, cone, pyramid, line
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>lineType</td>
+<td>
+	
+	    Enumeration: none, solid, dot, dash, longDash, dash-dot, longDash-dot, dash-dot-dot, longDash-dash, dash-dash-dot-dot
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>pointType</td>
+<td>
+	
+	    Enumeration: none, point, cross, plus, minus, star, square, circle, triangle, rhomb, pyramid, squareF, circleF, triangleF, rhombF, pyramidF
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>fillArea</td>
+<td>
+	
+	    Enumeration: yes, no
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>yAxisType</td>
+<td>
+	
+	    Enumeration: auto, withZero, shifted, log, dateTime
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>yAxisLabelsFormat</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>yAxisMin</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yAxisMax</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yAxisStep</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yAxisMarkCount</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yAxisMarkDist</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yAxisDivision</td>
+<td>
+	
+	    Enumeration: none, 1, 2, 4, 5, 10
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>xAxisDivision</td>
+<td>
+	
+	    Enumeration: none, major, minor, both
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>xAxisPos</td>
+<td>
+	
+	    Enumeration: bottom, origin
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>xGrid</td>
+<td>
+	
+	    Enumeration: none, major, minor, both
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>categoryGap</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>columnWd</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>yGrid</td>
+<td>
+	
+	    Enumeration: none, major, minor
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	
+      
+</td>
+</tr>
+
+<tr>
+<td>legend</td>
+<td>
+	
+	    Enumeration: none, left, right, top, bottom
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	Position on chart at which the explanatory legend is
+	to be shown. Select from [none|left|right|top|bottom]
+      
+</td>
+</tr>
+
+<tr>
+<td>legendMargin</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>legendPictureWd</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>legendPictureHg</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>legendLineHg</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>legendGap</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>legendFontSize</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>graphMargin</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>titleMargin</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>titleFontSize</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>labelAngle</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>labelFontSize</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+</td>
+</tr>
+
+<tr>
+<td>colorScheme</td>
+<td>
+	
+	    Enumeration: color, warm, cold, grey, black
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	Defines an appropriate color scheme for the
+      graph. Select from [ color| warm | cold | grey | black].
+      grey is very useful when printing in black and
+      white.
+      
+</td>
+</tr>
+
+</table>
+    
+
+== Element: values ==
+	
+	The extent of each Y value. There must be one for each
+      value in the 'name' list.
+      
+
+=== Content Model ===
+	
+      
+
+      
+      
+        %title;
+      ?
+      ,
+      
+    (
+        %msgr.value;
+      )+
+    
+    
+
+
+=== Attributes ===
+    
+<table>
+<th>Attribute</th>
+<th>Type</th>
+<th>Use</th>
+<th>Documentation</th>
+	    
+<tr>
+<td>color</td>
+<td>
+	
+	    TEXT
+	  
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	  Specify what color to use for a value. Works well with a
+      grey colorScheme, though be careful when mixing
+      colors, if one specific value is to stand out.
+  See W3C
+    for more information. Use either the keywords (See W3C,
+    or one of the CSS alternatives, for which see 
+      
+</td>
+</tr>
+
+<tr>
+<td>colType</td>
+<td>
+	
+	    Enumeration: none, block, cylinder, cone, pyramid, line
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	 Selects the type of column to be generated. One from
+	 
+      
+	none
+	block
+	cylinder
+	cone
+	pyramid
+	line
+      
+      The named shape is used to draw the vertical columns of
+      the bar chart. The default value is 'block', a two or three
+      dimentional square block
+      
+</td>
+</tr>
+
+<tr>
+<td>lineType</td>
+<td>
+	
+	    Enumeration: none, solid, dot, dash, longDash, dash-dot, longDash-dot, dash-dot-dot, longDash-dash, dash-dash-dot-dot
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	  If present, specifies the type of line to be used to
+      connect the peak values of the bar chart. Select, one from
+      
+      
+	none
+	solid
+	dot
+	dash
+	longDash
+	dash-dot
+	longDash-dot
+	dash-dot-dot
+	longDash-dash
+	dash-dash-dot-dot
+      
+
+      
+</td>
+</tr>
+
+<tr>
+<td>pointType</td>
+<td>
+	
+	    Enumeration: none, point, cross, plus, minus, star, square, circle, triangle, rhomb, pyramid, squareF, circleF, triangleF, rhombF, pyramidF
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	Defines the marker type to be used for extnts. No
+	default. Select one from
+	[none|point|cross|plus|minus|star|square|circle|triangle|rhomb|
+	pyramid|squareF|circleF|triangleF|rhombF|pyramidF]. rhomb is a
+	rhombus, those items suffixed 'F' are filled shapes
+      
+</td>
+</tr>
+
+<tr>
+<td>smooth</td>
+<td>
+	
+	    Enumeration: yes, no
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	When values are connected with a line (lineType
+	property on the values element), the line may be smoothed
+	using this property. Select from [yes|no]. Defaults to no
+      
+</td>
+</tr>
+
+<tr>
+<td>fillArea</td>
+<td>
+	
+	    Enumeration: yes, no
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	For any set of values, the fillArea property joins the
+	areas formed with the similar color (or shade of grey). Works
+	best when the effect attribute on
+	msgr is set to 2D. Select from [yes|no]. Defaults to no
+      
+</td>
+</tr>
+
+<tr>
+<td>startFrom</td>
+<td>
+	
+	    Enumeration: axis, last
+</td>
+<td>
+	Optional
+</td>
+<td>
+	    
+	For a stacked graph, specify from what origin the bar
+	should start. Select from [axis|last]. If
+	axis is selected, the bar is started from the
+	X axis. If last is selected, then one set of
+	values is stacked on top of (starting where the previous one
+	ended) the previous one. The default is axis
+	
+      
+</td>
+</tr>
+
+</table>
+    
+
+== Element: value ==
+	
+	A single value specifiying the extent of one 'name'. The
+      name is the X axis label, the value is the Y extent.
+      
+
+=== Content Model ===
+	
+      
+      
+    TEXT
+    
+    
+
+
+=== Attributes ===
+    

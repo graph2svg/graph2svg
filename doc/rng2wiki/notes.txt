@@ -1,0 +1,1 @@
+java -jar c:\aaa\graph2svg\saxon8-8j\saxon8.jar -o graph2svg.wiki.txt ..\scripts\graph2svg.rng rng2wiki.xsl

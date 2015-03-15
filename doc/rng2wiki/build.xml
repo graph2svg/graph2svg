@@ -1,0 +1,36 @@
+<project default="main">
+	<!-- Required to use tasks from ant-contrib -->
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+
+	<property file="build.properties" />
+
+
+	<!--********************************************* 
+		***** Relax NG to Wiki documentation ********
+		********************************************* -->
+
+	<!-- Transform one file -->
+	<target name="transformFile">
+		<!-- java -jar  d:\kuba\_prog\saxon8-8j\saxon8.jar -o pic.svg gr.xml use_msgr2svg.xsl-->
+		<java jar="${saxonJar}" fork="true">
+			<arg value="-o" />
+			<arg value="${outputFile}" />
+			<arg value="${inputFile}" />
+			<arg value="${style}" />
+		</java>
+	</target>
+
+	<target name="graph2wiki">
+		<antcall target="transformFile">
+			<param name="style" value="rng2wiki.xsl" />
+			<param name="inputFile" value="..\scripts\graph2svg.rng" />
+			<param name="outputFile" value="graph2svg.wiki.txt" />
+		</antcall>
+	</target>
+
+
+	<target name="main">
+		<antcall target="graph2wiki" />
+	</target>
+
+</project>
