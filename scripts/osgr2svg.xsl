@@ -318,7 +318,7 @@
 <xsl:otherwise>  <!--******************************graphType = 'norm' a other types-->
 	<!-- variable calculation for norm type -->
 		<!-- X axis - categories -->
-	<xsl:variable name="catGap" select="m:Att('catGap', 10)"/> 
+	<xsl:variable name="catGap" select="m:Att('categoryGap', 10)"/> 
 	<xsl:variable name="colWd" select="m:Att('columnWd', 30)"/> 
 	<xsl:variable name="catCount" as="xs:integer" select="count($gra/ph/names/name) cast as xs:integer"/> 
 	<xsl:variable name="catWd" select="2*$catGap+$colWd"/> 

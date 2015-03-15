@@ -251,7 +251,7 @@ the pie chart sections.
 		<optional>
 			<attribute name="smooth" a:defaultValue="no">
 				<a:documentation>
-When the data series is displayed as a line it can be smoothen to a Bézier curve. It won't have
+When the data series is displayed as a line it can be smoothen to a Bezier curve. It won't have
 any effect on other type of OSGR graph.
 				</a:documentation>
 				<choice>
@@ -328,6 +328,8 @@ For the OSGR graphs the default value is `block`. The attribute is ignored for p
 
 MSGR graphs are not drown with columns by default (the default value is `none`) and the selected option 
 applies to all data series unless it is overwritten on the series level.
+
+Can be freely combined with any `lineType` or `pointType` value.
 				</a:documentation>
 				<choice>
 					<value>none</value>
@@ -424,10 +426,16 @@ The units are SVG pixels and the default value is 20 for MSGR graphs and 30 for 
 	<define name="attlist.common.all" combine="interleave">
 		
 		<optional>
-			<attribute name="lineType" a:defaultValue="none">
+			<attribute name="lineType" a:defaultValue="solid">
 				<a:documentation>
-If set to anything else then `none` the data series points will be connected with a line
-of a particular type.
+If set to anything else then `none` the points of the data series or curve will be connected with a line
+of a particular type. When defined on the root element level the value applies to all series or curves unless
+it is overwritten for a particular data series or curve.
+
+By default the `lineType` for MSGR and XYGR graphs is a `solid` line whereas points of OSGR graph are not connected 
+with line (`lineType` = `none`)
+
+It can be freely combined with any `pointType` or `colType` (for MSGR and OSGR graphs only) value.
 				</a:documentation>
 				<choice>
 					<value>none</value>
@@ -447,10 +455,11 @@ of a particular type.
 		<optional>
 			<attribute name="pointType" a:defaultValue="none">
 				<a:documentation>
-					@FIXME. No visible effect? Leaves a gap in the top of
-					the bar chart line? Is this attribute applicable to a bar chart?
-					There is code to process it, though it seems not to
-					work.
+Defining the type of point drown on the data value coordinates.
+					
+It can be freely combined with any of `lineType` or `colType` (for MSGR and OSGR graphs only) values.
+While in some cases it can be desired in other it may not have a strong visible effect as the colour
+of points is the same as the line or column colour.
 				</a:documentation>
 				<choice>
 					<value>none</value>
@@ -476,14 +485,29 @@ of a particular type.
 		<optional>
 			<attribute name="yAxisType" a:defaultValue="auto">
 				<a:documentation>
-					If the Y values do not start at zero, use this property
-					to obtain a clearer graph. Select one from
+The attribute allows to specify the type of the Y axis in accordance with the type and size of the data displayed.
 
- * auto - Let the software decide
- * withZero - Include a zero value
+Set the attribute to `dateTime` if the data values are date or time. The dateTime values are
+in the standard XML format, see 
+http://www.w3.org/TR/xmlschema-2/#dateTime
+
+Use the `log` value if the data values are of a different magnitudes (e.g. 0.015, 12, 85623).
+
+If the differences between data values are small relative to their size (e.g. 1002, 995, 1004) 
+it is better to display only relevant part of the Y axis rather then the whole axis starting
+from 0. Such axis type is called shifted. The choice whether the origin is included or not
+is done automatically as the `yAxisType` is set to `auto` by default. Use `shifted` option
+to enforce shifted type of axis or `withZero` to always display the full scale of the axis
+including zero.
+
+To summarise the options:
+ * auto - let the software decide between `withZero` and `shifted` options, there is no auto-detection for `log` and `dateTime` type of axis
+ * withZero - always include a zero value
  * shifted - start at non-zero value as appropriate
  * log - use a log scale
+ * dateTime - use date or time scale, the dates and/or times labels are formatted according the value of `yAxisLabelsFormat` attribute 
 
+Note that The various options are not very compatible with sum and stacked types of MSGR graphs.
 				</a:documentation>
 				<choice>
 					<value>auto</value>
@@ -498,7 +522,36 @@ of a particular type.
 		<optional>
 			<attribute name="yAxisLabelsFormat" a:defaultValue="auto">
 				<a:documentation>
+*** xAxisLabelsFormat / yAxisLabelsFormat
+elements: xygr, msgr, osgr
+ - allows customise format pattern for axes labels 
+ - currently works only for dates and numbers
+ - for osgr and msgr graphs applicable only on y axis
 
+when axisType=dateTime
+ - for examples see: http://www.w3.org/TR/xslt20/#date-time-examples
+ - in general the value of xAxisLabelsFormat / yAxisLabelsFormat follows the template:
+      <picture>~<language>~<calendar>~<country>
+   where all the parts are send to the function format-dateTime as described on the page referred above.
+   The language, calendar and country parts are optional.
+   Note that due to the fact the "~" is used as delimiter the pattern cannot contain it. 
+ - if empty an automatic pattern is used (as the picture part):
+ 	- if step is in days: [Y0001]-[M01]-[D01]
+ 	- if step is in hours: [D01]. [H01]:[m01]
+ 	- if step is in minutes: [H01]:[m01] 
+ 	- if step is in seconds: [m01]:[s01]
+ - the argument is ignored if the axisType is not dateTime
+
+when axisType is a normal number, i.e.: auto, shifted or withZero (not log)
+ - see: http://www.w3schools.com/xsl/func_formatnumber.asp
+ - default is '0.##############'
+ - for msgr graph with stacked="percentage" the default pattern is ' #0%'
+ - Note that the format-number function behave differently in saxon8 and saxon9. 
+   For example if using pattern '#.##' numbers 0 or 0.125 in saxon8 would be formatted 
+   to "0" or "0.13", but in saxon9 to "" or ".13"!
+
+examples:
+yAxisLabelsFormat="0.000"
 				</a:documentation>
 				<text />
 			</attribute>

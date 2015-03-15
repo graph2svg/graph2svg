@@ -1,4 +1,4 @@
-<!ELEMENT osgr (title?, names?, values+)>
+<!ELEMENT osgr (title?, names?, values)>
 <!ELEMENT names (name+)>
 <!ELEMENT values (value+)>
 <!ELEMENT title (#PCDATA)>
