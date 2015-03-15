@@ -4,34 +4,14 @@
 
 	<property file="build.properties" />
 
-	<!-- runs batch validation for specified directory and schema (both Relax NG or DTD) -->
-	<target name="validate">
-		<path id="batchValidator.classpath">
-			<pathelement location="${batchValidator.classpathDir}" />
-			<pathelement location="${batchValidator.jarDir}/isorelax.jar" />
-			<pathelement location="${batchValidator.jarDir}/msv.jar" />
-			<pathelement location="${batchValidator.jarDir}/relaxngDatatype.jar" />
-			<pathelement location="${batchValidator.jarDir}/xercesImpl.jar" />
-			<pathelement location="${batchValidator.jarDir}/xmlParserAPIs.jar" />
-			<pathelement location="${batchValidator.jarDir}/xsdlib.jar" />
-		</path>
 
-		<java classname="${batchValidator.Class}" classpathref="batchValidator.classpath" fork="true">
-			<arg value="${schemaFile}" />
-			<arg value="${xmlFileDir}" />
-			<!-- optional -->
-			<!--arg value="${filter}"/-->
-		</java>
-	</target>
-	
-	<target name="copyDtds">
-		<copy file="../scripts/osgr.dtd" todir="e2e/osgr" overwrite="true"/>
-		<copy file="../scripts/msgr.dtd" todir="e2e/msgr" overwrite="true"/>
-		<copy file="../scripts/xygr.dtd" todir="e2e/xygr" overwrite="true"/>
-	</target>
-	
-	<!-- runs XSLT transformation on every file in the specified directory (respecting the filter give)
-	results are generated to the specified subdirectory -->
+	<!--********************************************* 
+		***** XML to SVG transformation tasks *******
+		********************************************* -->
+
+	<!-- Runs XSLT transformation on every file in the specified directory. Results are written to
+		the specified output subdirectory. Optionaly a filter can be provided restricting
+		the files processed. -->
 	<target name="transform">
 		<path id="batchTransform.classpath">
 			<pathelement location="${batchTransform.classpathDir}" />
@@ -50,7 +30,7 @@
 		</java>
 	</target>
 
-	<!--transform one file - not used but keep it to know the syntax-->
+	<!-- Transform one file - not used but keep it to know the syntax. -->
 	<target name="transformFile">
 		<!-- java -jar  d:\kuba\_prog\saxon8-8j\saxon8.jar -o pic.svg gr.xml use_msgr2svg.xsl-->
 		<java jar="${saxonJar}" fork="true">
@@ -59,8 +39,8 @@
 		</java>
 	</target>
 
-	<!-- Given a base directory and its two subdirectories creates a file comaparing pictures (respecting the given filter)
-	from both subdirectories in a single HTML file -->
+	<!-- Creates an HTML file which side by side compares all svg files of the same name from two given directories.
+	 A filter can be provided restricting used files. -->
 	<target name="createComparison">
 		<path id="createComparison.classpath">
 			<pathelement location="${createComparison.classpathDir}" />
@@ -74,6 +54,10 @@
 		</java>
 	</target>
 
+
+	<!--********************************************* 
+		***** SVG to PNG transformation tasks *******
+		********************************************* -->
 
 	<target name="generatePngFromSvg">
 		<!-- TODO directory or more files -->
@@ -90,8 +74,8 @@
 		</exec>
 	</target>
 
-	<!-- recursively go through all directories in a given file and 
-		every file with .svg extension will transform to .png (to the same directory).-->
+	<!-- recursively go through all *.svg files in a given directory and transforms them
+		to png. The output files are created in the same directory as input files (with .png extension).-->
 	<target name="generatePng">
 		<foreach target="generatePngFromSvg" param="svgFile">
 			<param name="pngFileExtension" value=".png" />
@@ -103,18 +87,47 @@
 		</foreach>
 	</target>
 
-	<!-- bulk targets -->
+	<!--********************************************* 
+		***** Validation tasks **********************
+		********************************************* -->
+
+	<!-- Runs batch validation for specified directory and schema (both Relax NG or DTD) -->
+	<target name="validate">
+		<path id="batchValidator.classpath">
+			<pathelement location="${batchValidator.classpathDir}" />
+			<pathelement location="${batchValidator.jarDir}/isorelax.jar" />
+			<pathelement location="${batchValidator.jarDir}/msv.jar" />
+			<pathelement location="${batchValidator.jarDir}/relaxngDatatype.jar" />
+			<pathelement location="${batchValidator.jarDir}/xercesImpl.jar" />
+			<pathelement location="${batchValidator.jarDir}/xmlParserAPIs.jar" />
+			<pathelement location="${batchValidator.jarDir}/xsdlib.jar" />
+		</path>
+
+		<java classname="${batchValidator.Class}" classpathref="batchValidator.classpath" fork="true">
+			<arg value="${schemaFile}" />
+			<arg value="${xmlFileDir}" />
+			<!-- optional -->
+			<!--arg value="${filter}"/-->
+		</java>
+	</target>
+
+	<target name="copyDtds">
+		<copy file="../scripts/osgr.dtd" todir="e2e/osgr" overwrite="true"/>
+		<copy file="../scripts/msgr.dtd" todir="e2e/msgr" overwrite="true"/>
+		<copy file="../scripts/xygr.dtd" todir="e2e/xygr" overwrite="true"/>
+	</target>
+
 	<target name="validateAllRng">
 		<antcall target="validate">
-			<param name="schemaFile" value="..\scripts\osgr.rng" />
+			<param name="schemaFile" value="..\scripts\graph2svg.rng" />
 			<param name="xmlFileDir" value="e2e\osgr" />
 		</antcall>
 		<antcall target="validate">
-			<param name="schemaFile" value="..\scripts\msgr.rng" />
+			<param name="schemaFile" value="..\scripts\graph2svg.rng" />
 			<param name="xmlFileDir" value="e2e\msgr" />
 		</antcall>
 		<antcall target="validate">
-			<param name="schemaFile" value="..\scripts\xygr.rng" />
+			<param name="schemaFile" value="..\scripts\graph2svg.rng" />
 			<param name="xmlFileDir" value="e2e\xygr" />
 		</antcall>
 	</target>
@@ -138,6 +151,11 @@
 		<antcall target="validateAllDtd"/>
 		<antcall target="validateAllRng"/>
 	</target>
+
+
+	<!--********************************************* 
+		***** Bulk tasks ****************************
+		********************************************* -->
 
 	<target name="testOsgr">
 		<antcall target="transform">
@@ -201,13 +219,13 @@
 		</replaceregexp>
 	</target>
 
-	<target name="testAllNoDtd">
+	<target name="testAllNoDtd" depends="copyDtds">
 		<antcall target="suppresDoctypes" />
 		<antcall target="testAll" />
 		<antcall target="resumeDoctypes" />
 	</target>
 
-	<target name="testAll">
+	<target name="testAll" depends="copyDtds">
 		<antcall target="testOsgr" />
 		<antcall target="testMsgr" />
 		<antcall target="testXygr" />
